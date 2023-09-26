@@ -49,6 +49,7 @@ public interface PeopleRepository extends Neo4jRepository<People, Long> {
     @Query("""
             MATCH(p:People)-[c:CONNECTED_TO* {status: "CONNECTED"}]-(friend:People)
             WHERE id(p) = $userId
+            AND id(p) != id(friend)
             AND size(c) = $level
             RETURN friend
             """)
