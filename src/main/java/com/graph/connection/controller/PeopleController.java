@@ -1,13 +1,17 @@
 package com.graph.connection.controller;
 
-import com.graph.connection.domain.ConnectionStatus;
 import com.graph.connection.domain.CountDTO;
 import com.graph.connection.domain.PeopleDTO;
 import com.graph.connection.service.PeopleService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.util.List;
@@ -86,5 +90,24 @@ public class PeopleController {
     @GetMapping("/{userId}/connections")
     public ResponseEntity<List<PeopleDTO>> getConnections(@PathVariable Long userId) {
         return ResponseEntity.ok(peopleService.findConnections(userId));
+    }
+
+    @Operation(
+            summary = "Find Connections Nth Level",
+            tags = "Network"
+    )
+    @GetMapping("/{userId}/connections/{level}")
+    public ResponseEntity<List<PeopleDTO>> getNthLevelConnection(@PathVariable Long userId, @PathVariable Long level) {
+        return ResponseEntity.ok(peopleService.findNthLevelConnection(userId, level));
+    }
+
+    @Operation(
+            summary = "Number of Level Between Users",
+            tags = "Network"
+    )
+    @GetMapping("/{userId}/level/{anotherUserId}")
+    public ResponseEntity<CountDTO> getNoOfLevelBetween(@PathVariable Long userId, @PathVariable Long anotherUserId) {
+        CountDTO count = new CountDTO(peopleService.findNoOfLevelBetween(userId, anotherUserId));
+        return ResponseEntity.ok(count);
     }
 }

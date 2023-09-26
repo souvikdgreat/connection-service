@@ -1,6 +1,5 @@
 package com.graph.connection.service;
 
-import com.graph.connection.domain.ConnectionStatus;
 import com.graph.connection.domain.PeopleDTO;
 import com.graph.connection.entity.People;
 import com.graph.connection.repository.PeopleRepository;
@@ -66,5 +65,17 @@ public class PeopleService {
                 .stream()
                 .map(PeopleDTO::from)
                 .collect(Collectors.toList());
+    }
+
+    public List<PeopleDTO> findNthLevelConnection(Long userId, Long level) {
+        return peopleRepository.findNthLevelConnectionById(userId, level)
+                .stream()
+                .map(PeopleDTO::from)
+                .collect(Collectors.toList());
+    }
+
+    public Long findNoOfLevelBetween(Long userId, Long anotherUserId) {
+        return peopleRepository.findNoOfLevelBetweenUser(userId, anotherUserId)
+                .orElseThrow();
     }
 }
