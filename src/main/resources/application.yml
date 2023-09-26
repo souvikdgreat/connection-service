@@ -20,3 +20,8 @@ management:
   health:
     neo4j:
       enabled: true
+
+logging:
+  level:
+    root: info
+    org.neo4j.driver.internal.async.outbound: debug

@@ -1,5 +1,6 @@
 package com.graph.connection.controller;
 
+import com.graph.connection.domain.ConnectionStatus;
 import com.graph.connection.service.ConnectionService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
@@ -32,8 +33,8 @@ public class ConnectionController {
             tags = "Connection"
     )
     @PatchMapping("/update/{targetUserId}")
-    public ResponseEntity<Void> updateConnection(@PathVariable Long targetUserId, Long senderId, Boolean isAccept) {
-        connectionService.updateConnection(targetUserId, senderId, isAccept);
+    public ResponseEntity<Void> updateConnection(@PathVariable Long targetUserId, Long senderId, ConnectionStatus connectionStatus) {
+        connectionService.updateConnection(targetUserId, senderId, connectionStatus);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

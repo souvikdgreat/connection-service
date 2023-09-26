@@ -19,17 +19,17 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Builder
-public class People {
+public class People implements PeopleProjection {
 
     @Id
     @GeneratedValue
     Long id;
 
     String name;
-    
+
     @Relationship(type = "CONNECTED_TO")
     List<Connection> connections;
 
     @Relationship(type = "FOLLOWING")
-    List<People> following;
+    List<PeopleProjection> following;
 }

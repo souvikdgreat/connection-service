@@ -1,6 +1,6 @@
 package com.graph.connection.entity;
 
-import com.graph.connection.domain.ConnectionType;
+import com.graph.connection.domain.ConnectionStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +25,7 @@ public class Connection {
     Long id;
 
     @TargetNode
-    People people;
+    PeopleProjection people;
 
-    ConnectionType connectionType;
+    ConnectionStatus connectionStatus;
 }

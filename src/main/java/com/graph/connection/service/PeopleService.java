@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -15,23 +16,21 @@ public class PeopleService {
     private final PeopleRepository peopleRepository;
 
     public PeopleDTO createPeople(PeopleDTO peopleDTO) {
-        People savedEntity = peopleRepository.save(peopleDTO.createEntity());
+        People savedEntity = save(peopleDTO.createEntity());
         return PeopleDTO.from(savedEntity);
     }
 
-    public People findById(Long id) {
+    public PeopleDTO findById(Long id) {
         return peopleRepository.findById(id)
+                .map(PeopleDTO::from)
                 .orElseThrow();
     }
 
-    public List<PeopleDTO> searchPeople(String name) {
-        return peopleRepository.findAllByName(name)
-                .stream()
-                .map(PeopleDTO::from)
-                .toList();
+    public People save(People people) {
+        return peopleRepository.save(people);
     }
 
-    public void save(People people) {
-        peopleRepository.save(people);
+    Optional<People> findEntityById(Long id) {
+        return peopleRepository.findById(id);
     }
 }

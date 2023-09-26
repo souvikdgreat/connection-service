@@ -1,6 +1,6 @@
 package com.graph.connection.domain;
 
-public enum ConnectionType {
+public enum ConnectionStatus {
     CONNECTED,
     PENDING,
     REJECTED
