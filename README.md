@@ -26,8 +26,12 @@ CREATE (p:People {name: "User2"}) return p;
 CREATE (p:People {name: "User3"}) return p;
 CREATE (p:People {name: "User4"}) return p;
 CREATE (p:People {name: "User5"}) return p;
+CREATE (p:People {name: "User6"}) return p;
+CREATE (p:People {name: "User7"}) return p;
 
 MATCH (p1:People {name: "User1"}),(p2:People {name: "User3"})
+CREATE (p1)-[c:CONNECTED_TO {status: "CONNECTED"}]->(p2);
+MATCH (p1:People {name: "User7"}),(p2:People {name: "User0"})
 CREATE (p1)-[c:CONNECTED_TO {status: "CONNECTED"}]->(p2);
 MATCH (p1:People {name: "User3"}),(p2:People {name: "User5"})
 CREATE (p1)-[c:CONNECTED_TO {status: "PENDING"}]->(p2);
@@ -43,4 +47,11 @@ MATCH (p1:People {name: "User0"}),(p2:People {name: "User5"})
 CREATE (p1)-[f:FOLLOWING]->(p2);
 MATCH (p1:People {name: "User5"}),(p2:People {name: "User0"})
 CREATE (p1)-[f:FOLLOWING]->(p2);
+
 ```
+
+## Feedback
+1. Connected rejected pending user API (connected is already present, make it configurable)
+2. Count API for followings
+3. Introduce pagination for list APIs
+4. Neo4J cloud service recommendation

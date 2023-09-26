@@ -4,6 +4,7 @@ import com.graph.connection.domain.PeopleDTO;
 import com.graph.connection.entity.People;
 import com.graph.connection.repository.PeopleRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,8 +43,8 @@ public class PeopleService {
                 .collect(Collectors.toList());
     }
 
-    public List<PeopleDTO> findFollowers(Long userId) {
-        return peopleRepository.findFollowersById(userId)
+    public List<PeopleDTO> findFollowers(Long userId, PageRequest pageRequest) {
+        return peopleRepository.findFollowersById(userId, pageRequest)
                 .stream()
                 .map(PeopleDTO::from)
                 .collect(Collectors.toList());
