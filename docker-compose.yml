@@ -4,6 +4,8 @@ services:
   api:
     image: gradle:8.2.1-jdk17
     container_name: api
+    depends_on:
+      - neo4j
     ports:
       - "8080:8080"
     working_dir: /app
@@ -18,12 +20,6 @@ services:
     command:
       - "bootRun"
       - "--info"
-    healthcheck:
-      test: curl http://localhost:8080/actuator/health
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 120s
     environment:
       GRADLE_USER_HOME: /gradle_user_home
       NEO4J_URI: bolt://neo4j:7687

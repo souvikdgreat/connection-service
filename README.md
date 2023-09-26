@@ -49,3 +49,17 @@ MATCH (p1:People {name: "User5"}),(p2:People {name: "User0"})
 CREATE (p1)-[f:FOLLOWING]->(p2);
 
 ```
+
+## Deployment
+
+Build the docker image using from [Dockerfile](./Dockerfile) `docker buildx build -t connection-service:latest .`
+
+> It's a multi layer docker image which build the jar and then build the image containing the jar.
+> And as an entrypoint run the jar.
+
+The image requires 3 environment variable to start the app.
+```shell
+NEO4J_URI: bolt://neo4j:7687
+NEO4J_AUTH_USERNAME: neo4j
+NEO4J_AUTH_PASSWORD: password
+```

@@ -1,0 +1,14 @@
+.git
+.idea
+.vscode
+.gradle
+.gitignore
+bin
+build
+gradle
+gradlew
+gradlew.bat
+README.md
+Dockerfile
+docker-compose.yml
+
