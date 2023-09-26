@@ -11,9 +11,9 @@ public interface ConnectionRepository extends Neo4jRepository<Connection, Long> 
 
     @Query("""
         MATCH (pl:People)-[c:CONNECTED_TO]->(pr:People)
-        WHERE id(pl) = $senderId and id(pr) = $targetUserId
-        SET c.connectionType = $connectionStatus
+        WHERE id(pl) = $requesterUserId and id(pr) = $userId
+        SET c.connectionType = $status
         RETURN c
         """)
-    Optional<Connection> updateStatusBySenderAndTargetId(Long senderId, Long targetUserId, ConnectionStatus connectionStatus);
+    Optional<Connection> updateStatusByRequesterUserId(Long requesterUserId, Long userId, ConnectionStatus status);
 }
