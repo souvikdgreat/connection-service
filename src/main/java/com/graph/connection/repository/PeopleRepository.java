@@ -1,6 +1,5 @@
 package com.graph.connection.repository;
 
-import com.graph.connection.domain.ConnectionStatus;
 import com.graph.connection.entity.People;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
@@ -18,24 +17,31 @@ public interface PeopleRepository extends Neo4jRepository<People, Long> {
     List<People> findMutualConnections(Long userId, Long anotherUserId);
 
     @Query("""
-            MATCH (:People)-[f:FOLLOWING]->(p:People)
+            MATCH (follower:People)-[f:FOLLOWING]->(p:People)
             WHERE id(p) = $userId
-            RETURN p
+            RETURN follower
             """)
     List<People> findFollowersById(Long userId);
 
     @Query("""
-            MATCH (:People)<-[f:FOLLOWING]-(p:People)
+            MATCH (follower:People)-[f:FOLLOWING]->(p:People)
             WHERE id(p) = $userId
-            RETURN p
+            RETURN COUNT(follower)
+            """)
+    Long followersCount(Long userId);
+
+    @Query("""
+            MATCH (following:People)<-[f:FOLLOWING]-(p:People)
+            WHERE id(p) = $userId
+            RETURN following
             """)
     List<People> findFollowingsById(Long userId);
 
 
     @Query("""
-            MATCH (p:People)-[c:CONNECTED_TO {status: $status}]-(p1:People)
+            MATCH (p:People)-[c:CONNECTED_TO {status: "CONNECTED"}]-(friend:People)
             WHERE id(p) = $userId
-            RETURN p1
+            RETURN friend
             """)
-    List<People> findConnectionsById(Long userid, ConnectionStatus status);
+    List<People> findConnectionsById(Long userId);
 }

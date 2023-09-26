@@ -50,6 +50,10 @@ public class PeopleService {
                 .collect(Collectors.toList());
     }
 
+    public Long followersCount(Long userId) {
+        return peopleRepository.followersCount(userId);
+    }
+
     public List<PeopleDTO> findFollowings(Long userId) {
         return peopleRepository.findFollowingsById(userId)
                 .stream()
@@ -57,8 +61,8 @@ public class PeopleService {
                 .collect(Collectors.toList());
     }
 
-    public List<PeopleDTO> findConnections(Long userId, ConnectionStatus status) {
-        return peopleRepository.findConnectionsById(userId, status)
+    public List<PeopleDTO> findConnections(Long userId) {
+        return peopleRepository.findConnectionsById(userId)
                 .stream()
                 .map(PeopleDTO::from)
                 .collect(Collectors.toList());

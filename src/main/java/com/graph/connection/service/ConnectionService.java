@@ -34,10 +34,6 @@ public class ConnectionService {
                 .orElseThrow();
     }
 
-    public Long followersCount(Long userId) {
-        return connectionRepository.followersCount(userId);
-    }
-
     public Long connectionsCount(Long userId, ConnectionStatus status) {
         return connectionRepository.connectionsCount(userId, status);
     }

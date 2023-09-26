@@ -69,14 +69,4 @@ public class ConnectionController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .build();
     }
-
-    @Operation(
-            summary = "Get Follower Count",
-            tags = "Follow"
-    )
-    @GetMapping("/follow/{userId}/count")
-    public ResponseEntity<CountDTO> followersCount(@PathVariable Long userId) {
-        CountDTO count = new CountDTO(connectionService.followersCount(userId));
-        return ResponseEntity.ok(count);
-    }
 }
