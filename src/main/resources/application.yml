@@ -24,4 +24,4 @@ management:
 logging:
   level:
     root: info
-    org.neo4j.driver.internal.async.outbound: debug
+    # org.neo4j.driver.internal.async.outbound: debug # To print neo4j query and method param
