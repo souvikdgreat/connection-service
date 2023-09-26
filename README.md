@@ -13,4 +13,6 @@
 - This will start neo4j on `7474` port. Head to any browser and open http://localhost:7474.
 - Programmatically to connect to `7687` on `bolt://localhost:7687`
 
-### 2. 
+### 2. Start connection API service in docker
+- `docker-compose up -d`
+- This will start both app on `8080` and neo4j
