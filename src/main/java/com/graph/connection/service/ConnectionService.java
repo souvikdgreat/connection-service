@@ -16,7 +16,7 @@ public class ConnectionService {
     public void createConnection(Long userId, Long requestedUserId) {
         People sender = peopleService.findEntityById(userId).orElseThrow();
         Connection connection = Connection.builder()
-                .connectionStatus(ConnectionStatus.PENDING)
+                .status(ConnectionStatus.PENDING)
                 .people(peopleService.findEntityById(requestedUserId).orElseThrow())
                 .build();
         sender.getConnections().add(connection);
@@ -32,5 +32,13 @@ public class ConnectionService {
     public void updateConnection(Long requesterUserId, Long userId, ConnectionStatus connectionStatus) {
         connectionRepository.updateStatusByRequesterUserId(requesterUserId, userId, connectionStatus)
                 .orElseThrow();
+    }
+
+    public Long followersCount(Long userId) {
+        return connectionRepository.followersCount(userId);
+    }
+
+    public Long connectionsCount(Long userId, ConnectionStatus status) {
+        return connectionRepository.connectionsCount(userId, status);
     }
 }

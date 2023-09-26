@@ -27,5 +27,5 @@ public class Connection {
     @TargetNode
     PeopleProjection people;
 
-    ConnectionStatus connectionStatus;
+    ConnectionStatus status;
 }
