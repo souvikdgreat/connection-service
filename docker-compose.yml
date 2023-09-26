@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  api:
+    image: gradle:8.2.1-jdk17
+    container_name: api
+    ports:
+      - "8080:8080"
+    working_dir: /app
+    volumes:
+      - gradle-user-home:/gradle_user_home
+      - ./src:/app/src
+      - ./build.gradle:/app/build.gradle
+      - ./gradle.properties:/app/gradle.properties
+      - ./settings.gradle:/app/settings.gradle
+    environment:
+      GRADLE_USER_HOME: /gradle_user_home
+
+  neo4j:
+    image: neo4j:5.10.0-community-bullseye
+    container_name: neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j-data:/data
+    environment:
+      NEO4J_AUTH: neo4j/password
+
+volumes:
+  neo4j-data:
+  gradle-user-home:
