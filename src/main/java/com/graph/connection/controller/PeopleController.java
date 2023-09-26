@@ -3,10 +3,10 @@ package com.graph.connection.controller;
 import com.graph.connection.domain.ConnectionStatus;
 import com.graph.connection.domain.CountDTO;
 import com.graph.connection.domain.PeopleDTO;
+import com.graph.connection.domain.co.Cursor;
 import com.graph.connection.service.PeopleService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -54,8 +55,11 @@ public class PeopleController {
             tags = "Network"
     )
     @GetMapping("/{userId}/mutual/{anotherUserId}")
-    public ResponseEntity<List<PeopleDTO>> getMutualConnections(@PathVariable Long userId, @PathVariable Long anotherUserId) {
-        return ResponseEntity.ok(peopleService.findMutualConnections(userId, anotherUserId));
+    public ResponseEntity<List<PeopleDTO>> getMutualConnections(
+            @PathVariable Long userId,
+            @PathVariable Long anotherUserId,
+            Optional<Cursor> cursor) {
+        return ResponseEntity.ok(peopleService.findMutualConnections(userId, anotherUserId, cursor));
     }
 
     @Operation(
@@ -63,9 +67,10 @@ public class PeopleController {
             tags = "Network"
     )
     @GetMapping("/{userId}/followers")
-    public ResponseEntity<List<PeopleDTO>> getFollowers(@PathVariable Long userId, @RequestParam("page") int page, @RequestParam("size") int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        return ResponseEntity.ok(peopleService.findFollowers(userId,pageRequest));
+    public ResponseEntity<List<PeopleDTO>> getFollowers(
+            @PathVariable Long userId,
+            Optional<Cursor> cursor) {
+        return ResponseEntity.ok(peopleService.findFollowers(userId, cursor));
     }
 
     @Operation(
@@ -83,15 +88,27 @@ public class PeopleController {
             tags = "Network"
     )
     @GetMapping("/{userId}/followings")
-    public ResponseEntity<List<PeopleDTO>> getFollowings(@PathVariable Long userId) {
-        return ResponseEntity.ok(peopleService.findFollowings(userId));
+    public ResponseEntity<List<PeopleDTO>> getFollowings(
+            @PathVariable Long userId,
+            Optional<Cursor> cursor) {
+        return ResponseEntity.ok(peopleService.findFollowings(userId, cursor));
+    }
+
+    @Operation(
+            summary = "Get Followings Count",
+            tags = "Network"
+    )
+    @GetMapping("/{userId}/followings/count")
+    public ResponseEntity<CountDTO> getFollowingsCount(@PathVariable Long userId) {
+        CountDTO count = new CountDTO(peopleService.followingsCount(userId));
+        return ResponseEntity.ok(count);
     }
 
     @Operation(
             summary = "Get Connection Count",
-            tags = "Connection"
+            tags = "Network"
     )
-    @GetMapping("/{userId}/count")
+    @GetMapping("/{userId}/connections/count")
     public ResponseEntity<CountDTO> connectionsCount(
             @PathVariable Long userId,
             @RequestParam(required = false, defaultValue = "CONNECTED") ConnectionStatus status) {
@@ -104,8 +121,11 @@ public class PeopleController {
             tags = "Network"
     )
     @GetMapping("/{userId}/connections")
-    public ResponseEntity<List<PeopleDTO>> getConnections(@PathVariable Long userId) {
-        return ResponseEntity.ok(peopleService.findConnections(userId));
+    public ResponseEntity<List<PeopleDTO>> getConnections(
+            @PathVariable Long userId,
+            @RequestParam(required = false, defaultValue = "CONNECTED") ConnectionStatus status,
+            Optional<Cursor> cursor) {
+        return ResponseEntity.ok(peopleService.findConnections(userId, status, cursor));
     }
 
     @Operation(
@@ -113,8 +133,11 @@ public class PeopleController {
             tags = "Network"
     )
     @GetMapping("/{userId}/connections/{level}")
-    public ResponseEntity<List<PeopleDTO>> getNthLevelConnection(@PathVariable Long userId, @PathVariable Long level) {
-        return ResponseEntity.ok(peopleService.findNthLevelConnection(userId, level));
+    public ResponseEntity<List<PeopleDTO>> getNthLevelConnection(
+            @PathVariable Long userId,
+            @PathVariable Long level,
+            Optional<Cursor> cursor) {
+        return ResponseEntity.ok(peopleService.findNthLevelConnection(userId, level, cursor));
     }
 
     @Operation(
