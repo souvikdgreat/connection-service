@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,7 @@ public class ConnectionController {
             summary = "Approve or Reject connection request",
             tags = "Connection"
     )
-    @PostMapping("/respond")
+    @PutMapping("/respond")
     public ResponseEntity<Void> updateConnection(@RequestBody ConnectionRespondCO respondCO) {
         connectionService.updateConnection(respondCO.getRequesterUserId(), respondCO.getUserId(), respondCO.getStatus());
         return ResponseEntity.ok()
