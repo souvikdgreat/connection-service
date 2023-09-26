@@ -49,9 +49,3 @@ MATCH (p1:People {name: "User5"}),(p2:People {name: "User0"})
 CREATE (p1)-[f:FOLLOWING]->(p2);
 
 ```
-
-## Feedback
-1. Connected rejected pending user API (connected is already present, make it configurable)
-2. Count API for followings
-3. Introduce pagination for list APIs
-4. Neo4J cloud service recommendation
