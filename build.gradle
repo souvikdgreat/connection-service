@@ -24,6 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
     implementation 'ch.qos.logback:logback-classic'
+    implementation "org.springdoc:springdoc-openapi-ui:${springDocOpenapiUiVersion}"
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 

@@ -2,6 +2,7 @@ package com.graph.connection.controller;
 
 import com.graph.connection.domain.PeopleDTO;
 import com.graph.connection.service.PeopleService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,10 @@ public class PeopleController {
 
     private final PeopleService peopleService;
 
+    @Operation(
+            summary = "Create People",
+            tags = "People"
+    )
     @PostMapping
     public ResponseEntity<PeopleDTO> createPeople(@RequestBody PeopleDTO peopleDTO) {
         PeopleDTO createdResource = peopleService.createPeople(peopleDTO);
@@ -29,6 +34,10 @@ public class PeopleController {
                 .body(createdResource);
     }
 
+    @Operation(
+            summary = "Search People by name",
+            tags = "People"
+    )
     @GetMapping
     public ResponseEntity<List<PeopleDTO>> searchPeople(String name) {
         List<PeopleDTO> peoples = peopleService.searchPeople(name);

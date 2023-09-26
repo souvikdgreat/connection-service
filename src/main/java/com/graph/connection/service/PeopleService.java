@@ -19,10 +19,19 @@ public class PeopleService {
         return PeopleDTO.from(savedEntity);
     }
 
+    public People findById(Long id) {
+        return peopleRepository.findById(id)
+                .orElseThrow();
+    }
+
     public List<PeopleDTO> searchPeople(String name) {
         return peopleRepository.findAllByName(name)
                 .stream()
                 .map(PeopleDTO::from)
                 .toList();
+    }
+
+    public void save(People people) {
+        peopleRepository.save(people);
     }
 }
