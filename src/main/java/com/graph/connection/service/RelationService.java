@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ConnectionService {
+public class RelationService {
     private final PeopleService peopleService;
     private final ConnectionRepository connectionRepository;
 
@@ -32,9 +32,5 @@ public class ConnectionService {
     public void updateConnection(Long requesterUserId, Long userId, ConnectionStatus connectionStatus) {
         connectionRepository.updateStatusByRequesterUserId(requesterUserId, userId, connectionStatus)
                 .orElseThrow();
-    }
-
-    public Long connectionsCount(Long userId, ConnectionStatus status) {
-        return connectionRepository.connectionsCount(userId, status);
     }
 }

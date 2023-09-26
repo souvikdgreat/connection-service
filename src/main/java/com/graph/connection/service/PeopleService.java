@@ -1,5 +1,6 @@
 package com.graph.connection.service;
 
+import com.graph.connection.domain.ConnectionStatus;
 import com.graph.connection.domain.PeopleDTO;
 import com.graph.connection.entity.People;
 import com.graph.connection.repository.PeopleRepository;
@@ -59,6 +60,10 @@ public class PeopleService {
                 .stream()
                 .map(PeopleDTO::from)
                 .collect(Collectors.toList());
+    }
+
+    public Long connectionsCount(Long userId, ConnectionStatus status) {
+        return peopleRepository.connectionsCount(userId, status);
     }
 
     public List<PeopleDTO> findConnections(Long userId) {

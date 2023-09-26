@@ -16,11 +16,4 @@ public interface ConnectionRepository extends Neo4jRepository<Connection, Long> 
         RETURN c
         """)
     Optional<Connection> updateStatusByRequesterUserId(Long requesterUserId, Long userId, ConnectionStatus status);
-
-    @Query("""
-        MATCH (p:People)-[c:CONNECTED_TO {status: $status}]-(:People)
-        WHERE id(p) = $userId
-        RETURN COUNT(c)
-        """)
-    Long connectionsCount(Long userId, ConnectionStatus status);
 }
