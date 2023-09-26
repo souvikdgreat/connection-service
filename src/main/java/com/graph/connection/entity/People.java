@@ -10,8 +10,6 @@ import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 
-import java.util.UUID;
-
 @Node
 @Getter
 @Setter
@@ -22,7 +20,7 @@ public class People {
 
     @Id
     @GeneratedValue
-    UUID id;
+    Long id;
 
     String name;
 }

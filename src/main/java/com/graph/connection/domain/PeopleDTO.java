@@ -4,12 +4,10 @@ import com.graph.connection.entity.People;
 import lombok.Builder;
 import lombok.Value;
 
-import java.util.UUID;
-
 @Builder
 @Value
 public class PeopleDTO {
-    UUID id;
+    Long id;
     String name;
 
     public People createEntity() {
